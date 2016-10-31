@@ -1,14 +1,20 @@
 import Foundation
 
 
+class EmanonImage {
+
+    // http://stackoverflow.com/questions/20371338/drawing-uiimage-using-cgbitmapcontextcreate-full-size-image-for-texture-ios
+}
+
+
 class Emanon {
 
-    var expression: NSExpression!
+    private(set) var expression: NSExpression!
 
 
     func createExpression(depth: Int) {
 
-        let expressionString = ExpressionTree.randomExpression(maxDepth: depth)
+        let expressionString = Expression.randomExpression(maxDepth: depth)
         expression = NSExpression(format: expressionString)
     }
 
@@ -28,19 +34,13 @@ class Emanon {
 }
 
 
-extension Array {
+class Expression {
 
-    func randomItem() -> Element {
-        return self[Int(arc4random_uniform(UInt32(self.count)))]
-    }
-}
+    // http://nshipster.com/nsexpression/
 
-
-class ExpressionTree {
-
-    static let terminalProductions = ["x", "y"]
-    static let nonterminalProductions = ["(_ * -1)", "(_ + _)", "(_ - _)", "(_ * _)"]
-    static let productions = terminalProductions + nonterminalProductions
+    private static let terminalProductions = ["x", "y"]
+    private static let nonterminalProductions = ["(_ * -1)", "(_ + _)", "(_ - _)", "(_ * _)"]
+    private static let productions = terminalProductions + nonterminalProductions
 
 
     static func randomExpression(maxDepth: Int) -> String {
@@ -49,7 +49,7 @@ class ExpressionTree {
     }
 
 
-    static func expandExpression(expression: String, depth: Int) -> String {
+    private static func expandExpression(expression: String, depth: Int) -> String {
 
         if depth == 0 {
             return singleExpansion(expression: expression, terminal: true)
@@ -65,7 +65,7 @@ class ExpressionTree {
     }
 
 
-    static func singleExpansion(expression: String, terminal: Bool = false) -> String {
+    private static func singleExpansion(expression: String, terminal: Bool = false) -> String {
 
         return expression.characters.reduce("") { (expr, ch) in
 

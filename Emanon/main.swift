@@ -14,18 +14,18 @@ let p: CGPoint = CGPoint(x: 0, y: 0)
 print(p)
 
 
-let e = Emanon()
+let emanon = Emanon()
 
 for _ in 1...100 {
 
-    e.createExpression(depth: 8)
-    
-    print(e.expression)
+    emanon.createExpression(depth: 8)
 
+    print(emanon.expression)
+    
     for x in 0 ..< 320 {
         for y in 0 ..< 320 {
 
-            let result = e.evalExpression(x: Double(x), y: Double(y))
+            let result = emanon.evalExpression(x: Double(x), y: Double(y))
             print("\(x) \(y): \(result)")
         }
     }

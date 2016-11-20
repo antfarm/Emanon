@@ -7,18 +7,13 @@
 //
 
 import Foundation
-import CoreGraphics
-
-
-let p: CGPoint = CGPoint(x: 0, y: 0)
-print(p)
 
 
 let emanon = Emanon()
 
 for _ in 1...100 {
 
-    emanon.createExpression(depth: 8)
+    emanon.createExpression(depth: 5)
 
     print(emanon.expression)
     
@@ -26,7 +21,9 @@ for _ in 1...100 {
         for y in 0 ..< 320 {
 
             let result = emanon.evalExpression(x: Double(x), y: Double(y))
-            print("\(x) \(y): \(result)")
+            //print("\(x) \(y): \(result)")
+
+            let image = EmanonImage()
         }
     }
 

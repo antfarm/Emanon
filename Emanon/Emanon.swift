@@ -1,12 +1,6 @@
 import Foundation
 
 
-class EmanonImage {
-
-    // http://stackoverflow.com/questions/20371338/drawing-uiimage-using-cgbitmapcontextcreate-full-size-image-for-texture-ios
-}
-
-
 class Emanon {
 
     private(set) var expression: NSExpression!
@@ -51,13 +45,13 @@ class Expression {
 
     private static func expandExpression(expression: String, depth: Int) -> String {
 
-        if depth == 0 {
+        guard depth > 0 else {
             return singleExpansion(expression: expression, terminal: true)
         }
 
         let expansion = singleExpansion(expression: expression, terminal: false)
 
-        if expansion == expression {
+        guard expansion != expression else {
             return expression
         }
 
@@ -73,7 +67,8 @@ class Expression {
                 return expr + String(ch)
             }
 
-            return expr + (terminal ? self.terminalProductions : self.productions).randomItem()
+            return expr + (terminal ? self.terminalProductions : self.nonterminalProductions).randomItem()
+//            return expr + (terminal ? self.terminalProductions : self.productions).randomItem()
         }
     }
 }

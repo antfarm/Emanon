@@ -12,6 +12,9 @@ import Foundation
 extension Array {
 
     func randomItem() -> Element {
-        return self[Int(arc4random_uniform(UInt32(self.count)))]
+
+        let index = Int(arc4random_uniform(UInt32(self.count)))
+
+        return self[index]
     }
 }

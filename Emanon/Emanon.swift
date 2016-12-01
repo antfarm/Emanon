@@ -1,9 +1,12 @@
 import Foundation
 
+enum EmanonError: Error {
+    case noExpression
+}
 
 class Emanon {
 
-    private(set) var expression: NSExpression!
+    private(set) var expression: NSExpression?
 
 
     func createExpression(depth: Int) {
@@ -13,7 +16,11 @@ class Emanon {
     }
 
 
-    func evalExpression(x: Double, y: Double) -> Double {
+    func evalExpression(x: Double, y: Double) throws -> Double {
+
+        guard let expression = expression else {
+            throw EmanonError.noExpression
+        }
 
         // http://stackoverflow.com/questions/40338759/nsexpression-memory-leak
 

@@ -1,81 +1,121 @@
 import Foundation
 
-enum EmanonError: Error {
-    case noExpression
-}
 
 class Emanon {
 
-    private(set) var expression: NSExpression?
+    private(set) var expression: Expression!
+
+
+    var expressionString: String {
+        get {
+            return expression.toString()
+        }
+    }
 
 
     func createExpression(depth: Int) {
-
-        let expressionString = Expression.randomExpression(maxDepth: depth)
-        expression = NSExpression(format: expressionString)
+        expression = Expression.generate(depth: depth)
     }
 
 
-    func evalExpression(x: Double, y: Double) throws -> Double {
-
-        guard let expression = expression else {
-            throw EmanonError.noExpression
-        }
-
-        // http://stackoverflow.com/questions/40338759/nsexpression-memory-leak
-
-        var value: Any!
-
-        autoreleasepool {
-            value = expression.expressionValue(with: ["x" : x, "y": y], context: nil)
-        }
-
-        return value as! Double
-    }
-}
-
-
-class Expression {
-
-    // http://nshipster.com/nsexpression/
-
-    private static let terminalProductions = ["x", "y"]
-    private static let nonterminalProductions = ["(_ * -1)", "(_ + _)", "(_ - _)", "(_ * _)"]
-    private static let productions = terminalProductions + nonterminalProductions
-
-
-    static func randomExpression(maxDepth: Int) -> String {
-
-        return expandExpression(expression: "_", depth: maxDepth)
+    func evalExpression(x: Double, y: Double) -> Double {
+        return expression.eval(args: ["x": x, "y": y])
     }
 
 
-    private static func expandExpression(expression: String, depth: Int) -> String {
+    indirect enum Expression {
 
-        guard depth > 0 else {
-            return singleExpansion(expression: expression, terminal: true)
-        }
+        typealias ParameterName = String
+        typealias OperationName = String
+        typealias UnaryOperation = (Double) -> Double
+        typealias BinaryOperation = (Double, Double) -> Double
 
-        let expansion = singleExpansion(expression: expression, terminal: false)
-
-        guard expansion != expression else {
-            return expression
-        }
-
-        return expandExpression(expression: expansion, depth: depth - 1)
-    }
+        
+        case constant(ParameterName)
+        case unaryExpression(OperationName, Expression)
+        case binaryExpression(OperationName, Expression, Expression)
 
 
-    private static func singleExpansion(expression: String, terminal: Bool = false) -> String {
-
-        return expression.characters.reduce("") { (expr, ch) in
-
-            if ch != "_" {
-                return expr + String(ch)
+        private static var parameterNames: [ParameterName] {
+            get {
+                return ["x", "y"]
             }
+        }
 
-            return expr + (terminal ? self.terminalProductions : self.nonterminalProductions).randomItem()
-//            return expr + (terminal ? self.terminalProductions : self.productions).randomItem()
+
+        private static var unaryOperations: [OperationName: UnaryOperation] {
+            get {
+                return [
+                    "-": { -$0 },
+                    "sin": { sin($0) },
+                    "cos": { cos($0) },
+                    "sqrt": { sqrt($0) }
+                ]
+            }
+        }
+
+
+        private static var binaryOperations: [OperationName: BinaryOperation] {
+            get {
+                return [
+                    "+": { $0 + $1 },
+                    "-": { $0 - $1 },
+                    "*": { $0 * $1 }
+                ]
+            }
+        }
+
+
+        static func generate(depth: Int) -> Expression {
+
+            let rnd = drand48()
+
+            if depth == 0 || rnd < 0.1 {
+                return .constant(parameterNames.randomItem())
+            }
+            else if rnd < 0.6 {
+                return .unaryExpression(Array(unaryOperations.keys).randomItem(),
+                                        generate(depth: depth-1))
+            }
+            else {
+                return .binaryExpression(Array(binaryOperations.keys).randomItem(),
+                                         generate(depth: depth-1),
+                                         generate(depth: depth-1))
+            }
+        }
+
+
+        func eval(args: [String: Double]) -> Double {
+
+            switch self {
+
+            case let .constant(parameterName):
+                return args[parameterName]!
+
+            case let .unaryExpression(operationName, expr):
+                let op = Expression.unaryOperations[operationName]!
+                return op(expr.eval(args: args))
+
+            case let .binaryExpression(operationName, expr1, expr2):
+                let op = Expression.binaryOperations[operationName]!
+                return op(expr1.eval(args: args), expr2.eval(args: args))
+            }
+        }
+
+
+        func toString() -> String {
+
+            switch self {
+
+            case let .constant(parameterName):
+                return parameterName
+
+            case let .unaryExpression(operationName, expr):
+                return "(\(operationName) \(expr.toString()))"
+
+            case let .binaryExpression(operationName, expr1, expr2):
+                return "(\(operationName) \(expr1.toString()) \(expr2.toString()))"
+            }
         }
     }
 }

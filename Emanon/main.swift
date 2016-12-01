@@ -9,18 +9,18 @@
 import Foundation
 
 
-let emanon = Emanon2()
+let emanon = Emanon()
 
 for _ in 1...100 {
 
     emanon.createExpression(depth: 5)
 
-    print(emanon.expression ?? "NO EXPRESSION")
-    
+    print(emanon.expressionString)
+
     for x in 0 ..< 320 {
         for y in 0 ..< 320 {
 
-            let result = try! emanon.evalExpression(x: Double(x), y: Double(y))
+            let result = emanon.evalExpression(x: Double(x), y: Double(y))
 
             //print("\(x) \(y): \(result)")
 

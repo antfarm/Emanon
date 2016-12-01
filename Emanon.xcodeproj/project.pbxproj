@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		142137231DC61FE000363E21 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142137221DC61FE000363E21 /* main.swift */; };
-		1421372A1DC6210C00363E21 /* Emanon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142137291DC6210C00363E21 /* Emanon.swift */; };
+		1421372A1DC6210C00363E21 /* EmanonString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142137291DC6210C00363E21 /* EmanonString.swift */; };
 		1421373F1DC7660400363E21 /* Array+RandomItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1421373E1DC7660400363E21 /* Array+RandomItem.swift */; };
 		144169EA1DE2630D001C589B /* EmanonImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144169E91DE2630D001C589B /* EmanonImage.swift */; };
-		1448EC4C1DF00FEB00E99155 /* Emanon2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1448EC4B1DF00FEB00E99155 /* Emanon2.swift */; };
+		1448EC4C1DF00FEB00E99155 /* Emanon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1448EC4B1DF00FEB00E99155 /* Emanon.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,10 +29,10 @@
 /* Begin PBXFileReference section */
 		1421371F1DC61FE000363E21 /* Emanon */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Emanon; sourceTree = BUILT_PRODUCTS_DIR; };
 		142137221DC61FE000363E21 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		142137291DC6210C00363E21 /* Emanon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Emanon.swift; sourceTree = "<group>"; };
+		142137291DC6210C00363E21 /* EmanonString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmanonString.swift; sourceTree = "<group>"; };
 		1421373E1DC7660400363E21 /* Array+RandomItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+RandomItem.swift"; sourceTree = "<group>"; };
 		144169E91DE2630D001C589B /* EmanonImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmanonImage.swift; sourceTree = "<group>"; };
-		1448EC4B1DF00FEB00E99155 /* Emanon2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Emanon2.swift; sourceTree = "<group>"; };
+		1448EC4B1DF00FEB00E99155 /* Emanon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Emanon.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,8 +66,8 @@
 			isa = PBXGroup;
 			children = (
 				142137221DC61FE000363E21 /* main.swift */,
-				142137291DC6210C00363E21 /* Emanon.swift */,
-				1448EC4B1DF00FEB00E99155 /* Emanon2.swift */,
+				142137291DC6210C00363E21 /* EmanonString.swift */,
+				1448EC4B1DF00FEB00E99155 /* Emanon.swift */,
 				144169E91DE2630D001C589B /* EmanonImage.swift */,
 				1421373E1DC7660400363E21 /* Array+RandomItem.swift */,
 			);
@@ -133,11 +133,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1448EC4C1DF00FEB00E99155 /* Emanon2.swift in Sources */,
+				1448EC4C1DF00FEB00E99155 /* Emanon.swift in Sources */,
 				142137231DC61FE000363E21 /* main.swift in Sources */,
 				144169EA1DE2630D001C589B /* EmanonImage.swift in Sources */,
 				1421373F1DC7660400363E21 /* Array+RandomItem.swift in Sources */,
-				1421372A1DC6210C00363E21 /* Emanon.swift in Sources */,
+				1421372A1DC6210C00363E21 /* EmanonString.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,6 +12,7 @@
 		1421373F1DC7660400363E21 /* Array+RandomItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1421373E1DC7660400363E21 /* Array+RandomItem.swift */; };
 		144169EA1DE2630D001C589B /* EmanonImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144169E91DE2630D001C589B /* EmanonImage.swift */; };
 		1448EC4C1DF00FEB00E99155 /* EmanonEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1448EC4B1DF00FEB00E99155 /* EmanonEnum.swift */; };
+		14C688421DF17E87006C8ACE /* EmanonClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C688411DF17E87006C8ACE /* EmanonClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,6 +34,7 @@
 		1421373E1DC7660400363E21 /* Array+RandomItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+RandomItem.swift"; sourceTree = "<group>"; };
 		144169E91DE2630D001C589B /* EmanonImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmanonImage.swift; sourceTree = "<group>"; };
 		1448EC4B1DF00FEB00E99155 /* EmanonEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmanonEnum.swift; sourceTree = "<group>"; };
+		14C688411DF17E87006C8ACE /* EmanonClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmanonClass.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 			children = (
 				142137221DC61FE000363E21 /* main.swift */,
 				1448EC4B1DF00FEB00E99155 /* EmanonEnum.swift */,
+				14C688411DF17E87006C8ACE /* EmanonClass.swift */,
 				142137291DC6210C00363E21 /* EmanonString.swift */,
 				1421373E1DC7660400363E21 /* Array+RandomItem.swift */,
 				144169E91DE2630D001C589B /* EmanonImage.swift */,
@@ -133,6 +136,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14C688421DF17E87006C8ACE /* EmanonClass.swift in Sources */,
 				1448EC4C1DF00FEB00E99155 /* EmanonEnum.swift in Sources */,
 				142137231DC61FE000363E21 /* main.swift in Sources */,
 				144169EA1DE2630D001C589B /* EmanonImage.swift in Sources */,

@@ -16,7 +16,7 @@ class EmanonString {
     }
 
 
-    func evalExpression(x: Double, y: Double) throws -> Double {
+    func evalExpression(x: Double, y: Double) -> Double {
 
         // http://stackoverflow.com/questions/40338759/nsexpression-memory-leak
 
@@ -35,7 +35,7 @@ class EmanonString {
         // http://nshipster.com/nsexpression/
 
         private static let terminalProductions = ["x", "y"]
-        private static let nonterminalProductions = ["(_ * -1)", "(_ + _)", "(_ - _)", "(_ * _)"]
+        private static let nonterminalProductions = ["(_ * -1)", "(_ * -1)", "(_ * -1)", "(_ + _)", "(_ - _)", "(_ * _)"]
         private static let productions = terminalProductions + nonterminalProductions
 
 
@@ -73,31 +73,5 @@ class EmanonString {
     //            return expr + (terminal ? self.terminalProductions : self.productions).randomItem()
             }
         }
-    }
-}
-
-
-func mainString() {
-
-    let emanon = EmanonString()
-
-    for _ in 1...100 {
-
-        emanon.createExpression(depth: 5)
-
-        print(emanon.expressionString)
-
-        for x in 0 ..< 320 {
-            for y in 0 ..< 320 {
-
-                let result = try! emanon.evalExpression(x: Double(x), y: Double(y))
-
-                if x == 319 && y == 319 {
-                    print("\(x) \(y): \(result)")
-                }
-            }
-        }
-        
-        print()
     }
 }

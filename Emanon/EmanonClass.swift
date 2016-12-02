@@ -31,8 +31,6 @@ typealias BinaryOperation = (Double, Double) -> Double
 
 protocol Expression {
 
-    static var operationNames: [OperationName] {get}
-
     func eval(args: [ParameterName: Double]) -> Double
 
     func toString() -> String
@@ -42,19 +40,39 @@ protocol Expression {
 
 class ExpressionBuilder {
 
+    private static let constants: [ParameterName] = ["x", "y"]
+
+    private static let unaryOperations: [OperationName: UnaryOperation] = [
+
+        "-": { -$0 },
+        "sin": { sin($0) },
+        "cos": { cos($0) },
+    ]
+
+    private static let binaryOperations: [OperationName: BinaryOperation] = [
+
+        "+": { $0 + $1 },
+        "-": { $0 - $1 },
+        "*": { $0 * $1 }
+    ]
+
     static func generate(depth: Int) -> Expression {
 
         let rnd = drand48()
 
         if depth == 0 { //|| rnd < 0.1 {
-            return Constant(operationName: Constant.operationNames.randomItem())
+            return Constant(parameterName: constants.randomItem())
         }
         else if rnd < 0.5 {
-            return UnaryExpression(operationName: UnaryExpression.operationNames.randomItem(),
+            let operationName = Array(unaryOperations.keys).randomItem()
+            return UnaryExpression(operationName: operationName,
+                                   operation: unaryOperations[operationName]!,
                                    expr: generate(depth: depth-1))
         }
         else {
-            return BinaryExpression(operationName: BinaryExpression.operationNames.randomItem(),
+            let operationName = Array(binaryOperations.keys).randomItem()
+            return BinaryExpression(operationName: operationName,
+                                    operation: binaryOperations[operationName]!,
                                     expr1: generate(depth: depth-1),
                                     expr2: generate(depth: depth-1))
         }
@@ -65,51 +83,36 @@ class ExpressionBuilder {
 
 class Constant: Expression {
 
-    private static let operations: [OperationName] = ["x", "y"]
+    var parameterName: OperationName
 
-    static var operationNames: [OperationName] = operations
-
-    //
-
-    var operationName: OperationName
-
-    init(operationName: ParameterName) {
-        self.operationName = operationName
+    init(parameterName: ParameterName) {
+        self.parameterName = parameterName
     }
 
     func eval(args: [ParameterName: Double]) -> Double {
-        return args[operationName]!
+        return args[parameterName]!
     }
 
     func toString() -> String {
-        return operationName
+        return parameterName
     }
 }
 
 
 class UnaryExpression: Expression {
 
-    private static let operations: [OperationName: UnaryOperation] = [
-        "-": { -$0 },
-        "sin": { sin($0) },
-        "cos": { cos($0) },
-        ]
-
-    internal static var operationNames: [OperationName] = Array(operations.keys)
-    
-    //
-
     var operationName: OperationName
+    var operation: UnaryOperation
     var expr: Expression
 
-    init(operationName: OperationName, expr: Expression) {
+    init(operationName: OperationName, operation: @escaping UnaryOperation, expr: Expression) {
         self.operationName = operationName
+        self.operation = operation
         self.expr = expr
     }
 
     func eval(args: [ParameterName: Double]) -> Double {
-        let op = UnaryExpression.operations[operationName]!
-        return op(expr.eval(args: args))
+        return operation(expr.eval(args: args))
     }
 
     func toString() -> String {
@@ -120,29 +123,20 @@ class UnaryExpression: Expression {
 
 class BinaryExpression: Expression {
 
-    private static let operations: [OperationName: BinaryOperation] = [
-        "+": { $0 + $1 },
-        "-": { $0 - $1 },
-        "*": { $0 * $1 }
-    ]
-
-    internal static var operationNames: [OperationName] = Array(operations.keys)
-
-    //
-
     var operationName: OperationName
+    var operation: BinaryOperation
     var expr1: Expression
     var expr2: Expression
 
-    init(operationName: OperationName, expr1: Expression, expr2: Expression) {
+    init(operationName: OperationName, operation: @escaping BinaryOperation, expr1: Expression, expr2: Expression) {
         self.operationName = operationName
+        self.operation = operation
         self.expr1 = expr1
         self.expr2 = expr2
     }
 
     func eval(args: [ParameterName: Double]) -> Double {
-        let op = BinaryExpression.operations[operationName]!
-        return op(expr1.eval(args: args), expr2.eval(args: args))
+        return operation(expr1.eval(args: args), expr2.eval(args: args))
     }
 
     func toString() -> String {

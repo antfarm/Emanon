@@ -1,14 +1,13 @@
 import Foundation
 
-enum EmanonError: Error {
-    case noExpression
-}
+
 
 class EmanonString {
 
-    private(set) var expression: NSExpression?
+    private var expression: NSExpression!
 
     var expressionString: String!
+
 
     func createExpression(depth: Int) {
 
@@ -18,10 +17,6 @@ class EmanonString {
 
 
     func evalExpression(x: Double, y: Double) throws -> Double {
-
-        guard let expression = expression else {
-            throw EmanonError.noExpression
-        }
 
         // http://stackoverflow.com/questions/40338759/nsexpression-memory-leak
 
@@ -33,50 +28,76 @@ class EmanonString {
 
         return value as! Double
     }
+
+
+    class ExpressionString {
+
+        // http://nshipster.com/nsexpression/
+
+        private static let terminalProductions = ["x", "y"]
+        private static let nonterminalProductions = ["(_ * -1)", "(_ + _)", "(_ - _)", "(_ * _)"]
+        private static let productions = terminalProductions + nonterminalProductions
+
+
+        static func randomExpression(maxDepth: Int) -> String {
+
+            return expandExpression(expression: "_", depth: maxDepth)
+        }
+
+
+        private static func expandExpression(expression: String, depth: Int) -> String {
+
+            guard depth > 0 else {
+                return singleExpansion(expression: expression, terminal: true)
+            }
+
+            let expansion = singleExpansion(expression: expression, terminal: false)
+
+            guard expansion != expression else {
+                return expression
+            }
+
+            return expandExpression(expression: expansion, depth: depth - 1)
+        }
+
+
+        private static func singleExpansion(expression: String, terminal: Bool = false) -> String {
+
+            return expression.characters.reduce("") { (expr, ch) in
+
+                if ch != "_" {
+                    return expr + String(ch)
+                }
+
+                return expr + (terminal ? self.terminalProductions : self.nonterminalProductions).randomItem()
+    //            return expr + (terminal ? self.terminalProductions : self.productions).randomItem()
+            }
+        }
+    }
 }
 
 
-class ExpressionString {
+func mainString() {
 
-    // http://nshipster.com/nsexpression/
+    let emanon = EmanonString()
 
-    private static let terminalProductions = ["x", "y"]
-    private static let nonterminalProductions = ["(_ * -1)", "(_ + _)", "(_ - _)", "(_ * _)"]
-    private static let productions = terminalProductions + nonterminalProductions
+    for _ in 1...100 {
 
+        emanon.createExpression(depth: 5)
 
-    static func randomExpression(maxDepth: Int) -> String {
+        print(emanon.expressionString)
 
-        return expandExpression(expression: "_", depth: maxDepth)
-    }
+        for x in 0 ..< 320 {
+            for y in 0 ..< 320 {
 
+                let result = try! emanon.evalExpression(x: Double(x), y: Double(y))
 
-    private static func expandExpression(expression: String, depth: Int) -> String {
-
-        guard depth > 0 else {
-            return singleExpansion(expression: expression, terminal: true)
-        }
-
-        let expansion = singleExpansion(expression: expression, terminal: false)
-
-        guard expansion != expression else {
-            return expression
-        }
-
-        return expandExpression(expression: expansion, depth: depth - 1)
-    }
-
-
-    private static func singleExpansion(expression: String, terminal: Bool = false) -> String {
-
-        return expression.characters.reduce("") { (expr, ch) in
-
-            if ch != "_" {
-                return expr + String(ch)
+                if x == 319 && y == 319 {
+                    print("\(x) \(y): \(result)")
+                }
             }
-
-            return expr + (terminal ? self.terminalProductions : self.nonterminalProductions).randomItem()
-//            return expr + (terminal ? self.terminalProductions : self.productions).randomItem()
         }
+        
+        print()
     }
 }

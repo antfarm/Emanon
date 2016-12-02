@@ -8,25 +8,5 @@
 
 import Foundation
 
-
-let emanon = Emanon()
-
-for _ in 1...100 {
-
-    emanon.createExpression(depth: 5)
-
-    print(emanon.expressionString)
-
-    for x in 0 ..< 320 {
-        for y in 0 ..< 320 {
-
-            let result = emanon.evalExpression(x: Double(x), y: Double(y))
-
-            //print("\(x) \(y): \(result)")
-
-            let image = EmanonImage()
-        }
-    }
-
-    print()
-}
+mainEnum()
+//mainString()

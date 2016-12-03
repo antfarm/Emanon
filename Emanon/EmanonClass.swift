@@ -24,7 +24,7 @@ class EmanonClass {
 
 
 typealias ParameterName = String
-typealias OperationName = String
+//typealias OperationName = String
 typealias UnaryOperation = (Double) -> Double
 typealias BinaryOperation = (Double, Double) -> Double
 

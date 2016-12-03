@@ -10,8 +10,9 @@ import Foundation
 
 
 //typealias Emanon = EmanonEnum
-typealias Emanon = EmanonClass
+//typealias Emanon = EmanonClass
 //typealias Emanon = EmanonString
+typealias Emanon = EmanonClass2
 
 
 func main() {

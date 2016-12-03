@@ -21,6 +21,7 @@ class EmanonClass2 {
 }
 
 
+typealias ParameterName = String
 typealias OperationName = String
 typealias Operation = ([Double]) -> Double
 
@@ -33,15 +34,23 @@ class SExpressionBuilder {
 
         "-":   { (-1) * $0[0] },
         "sin": { sin($0[0]) },
-        "cos": { cos($0[0]) },
-        ]
-
-    private static let binaryOperations: [OperationName: Operation] = [
-
-        //        "+": { $0[0] + $0[1] },
-        //        "-": { $0[0] - $0[1] },
-        "*": { $0[0] * $0[1] }
+        "cos": { cos($0[0]) }
     ]
+
+//    private static let binaryOperations: [OperationName: Operation] = [
+//
+//        "+": { $0[0] + $0[1] },
+//        "-": { $0[0] - $0[1] },
+//        "*": { $0[0] * $0[1] }
+//    ]
+
+    private static let binaryOperations: [OperationName: Operation] = {
+        var ops = [OperationName: Operation]()
+        ops["+"] = { $0[0] + $0[1] }
+        ops["-"] = { $0[0] - $0[1] }
+        ops["*"] = { $0[0] * $0[1] }
+        return ops
+    }()
 
     static func generate(depth: Int) -> SExpression {
 

@@ -27,7 +27,7 @@ func main() {
 
             emanon.createExpression(depth: 5)
 
-            print(emanon.expressionString)
+            //print(emanon.expressionString)
 
             for x in 0 ..< sizeX {
 

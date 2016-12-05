@@ -1,10 +1,9 @@
 import Foundation
 
 
-class EmanonClass {
+class EmanonPolymorphism: Emanon {
 
     private var expression: Expression!
-
 
     var expressionString: String {
         get {
@@ -12,11 +11,9 @@ class EmanonClass {
         }
     }
 
-
     func createExpression(depth: Int) {
         expression = ExpressionBuilder.generate(depth: depth)
     }
-
 
     func evalExpression(x: Double, y: Double) -> Double {
         return expression.eval(args: ["x": x, "y": y])
@@ -24,8 +21,8 @@ class EmanonClass {
 }
 
 
-//typealias ParameterName = String
-//typealias OperationName = String
+typealias ParameterName = String
+typealias OperationName = String
 typealias UnaryOperation = (Double) -> Double
 typealias BinaryOperation = (Double, Double) -> Double
 

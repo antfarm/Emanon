@@ -1,7 +1,7 @@
 import Foundation
 
 
-class EmanonEnum {
+class EmanonEnum: Emanon {
 
     private var expression: Expression!
 

@@ -1,7 +1,7 @@
 import Foundation
 
 
-class EmanonClass2 {
+class EmanonList: Emanon {
 
     private var expression: SExpression!
 
@@ -22,23 +22,23 @@ class EmanonClass2 {
 }
 
 
-typealias ParameterName = String
-typealias OperationName = String
+typealias ParamName = String
+typealias OpName = String
 typealias Operation = ([Double]) -> Double
 
 
 class SExpressionBuilder {
 
-    private static let constants: [OperationName] = ["x", "y"]
+    private static let constants: [OpName] = ["x", "y"]
 
-    private static let unaryOperations: [OperationName: Operation] = [
+    private static let unaryOperations: [OpName: Operation] = [
 
         "-":   { -$0[0] },
         "sin": { sin($0[0]) },
         "cos": { cos($0[0]) }
     ]
 
-    private static let binaryOperations: [OperationName: Operation] = [
+    private static let binaryOperations: [OpName: Operation] = [
         // https://www.cocoawithlove.com/blog/2016/07/12/type-checker-issues.html
 
         "+": { $0[0] as Double + $0[1] as Double},
@@ -76,12 +76,12 @@ class SExpressionBuilder {
 
 class SExpression {
 
-    var operationName: OperationName
+    var operationName: OpName
     var operation: Operation?
     var operands: [SExpression]?
 
 
-    init(operationName: OperationName, operation: Operation?, operands: [SExpression]?) {
+    init(operationName: OpName, operation: Operation?, operands: [SExpression]?) {
 
         self.operationName = operationName
         self.operation = operation
@@ -89,7 +89,7 @@ class SExpression {
     }
 
 
-    func eval(args: [ParameterName: Double]) -> Double {
+    func eval(args: [ParamName: Double]) -> Double {
 
         guard let operation = operation, let operands = operands else {
             return args[operationName]!

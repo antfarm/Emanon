@@ -1,11 +1,11 @@
 import Foundation
 
 
-class EmanonString {
+class EmanonString: Emanon {
 
     private var expression: NSExpression!
 
-    var expressionString: String!
+    var expressionString: String = ""
 
 
     func createExpression(depth: Int) {

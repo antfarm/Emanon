@@ -1,7 +1,6 @@
 import Foundation
 
 
-
 class EmanonString {
 
     private var expression: NSExpression!

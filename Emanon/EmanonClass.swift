@@ -1,5 +1,6 @@
 import Foundation
 
+
 class EmanonClass {
 
     private var expression: Expression!
@@ -30,11 +31,8 @@ typealias BinaryOperation = (Double, Double) -> Double
 
 
 protocol Expression {
-
     func eval(args: [ParameterName: Double]) -> Double
-
     func toString() -> String
-
 }
 
 

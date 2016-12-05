@@ -5,6 +5,7 @@ class EmanonClass2 {
 
     private var expression: SExpression!
 
+
     var expressionString: String {
         get {
             return expression.toString()
@@ -32,25 +33,18 @@ class SExpressionBuilder {
 
     private static let unaryOperations: [OperationName: Operation] = [
 
-        "-":   { (-1) * $0[0] },
+        "-":   { -$0[0] },
         "sin": { sin($0[0]) },
         "cos": { cos($0[0]) }
     ]
 
-//    private static let binaryOperations: [OperationName: Operation] = [
-//
-//        "+": { $0[0] + $0[1] },
-//        "-": { $0[0] - $0[1] },
-//        "*": { $0[0] * $0[1] }
-//    ]
+    private static let binaryOperations: [OperationName: Operation] = [
+    // https://www.cocoawithlove.com/blog/2016/07/12/type-checker-issues.html
 
-    private static let binaryOperations: [OperationName: Operation] = {
-        var ops = [OperationName: Operation]()
-        ops["+"] = { $0[0] + $0[1] }
-        ops["-"] = { $0[0] - $0[1] }
-        ops["*"] = { $0[0] * $0[1] }
-        return ops
-    }()
+        "+": { $0[0] as Double + $0[1] as Double},
+        "-": { $0[0] as Double - $0[1] as Double},
+        "*": { $0[0] as Double * $0[1] as Double}
+    ]
 
     static func generate(depth: Int) -> SExpression {
 
@@ -117,5 +111,3 @@ class SExpression {
         return "(\(operationName) \(stringifiedOperands.joined(separator: " ")))"
     }
 }
-
-

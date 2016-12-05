@@ -1,11 +1,3 @@
-//
-//  EmanonImage.swift
-//  Emanon
-//
-//  Created by sean on 21/11/2016.
-//  Copyright © 2016 antfarm. All rights reserved.
-//
-
 import Foundation
 import CoreGraphics
 

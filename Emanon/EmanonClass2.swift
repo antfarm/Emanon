@@ -39,7 +39,7 @@ class SExpressionBuilder {
     ]
 
     private static let binaryOperations: [OperationName: Operation] = [
-    // https://www.cocoawithlove.com/blog/2016/07/12/type-checker-issues.html
+        // https://www.cocoawithlove.com/blog/2016/07/12/type-checker-issues.html
 
         "+": { $0[0] as Double + $0[1] as Double},
         "-": { $0[0] as Double - $0[1] as Double},
@@ -91,13 +91,26 @@ class SExpression {
 
     func eval(args: [ParameterName: Double]) -> Double {
 
-        guard let operation = operation,
-                let operands = operands else {
-                return args[operationName]!
+        guard let operation = operation, let operands = operands else {
+            return args[operationName]!
         }
 
-        let evaluatedOperands = operands.map { $0.eval(args: args) }
-        return operation(evaluatedOperands)
+        // let evaluatedOperands = operands.map { $0.eval(args: args) }
+
+        // var evaluatedOperands = [Double]()
+        // for operand in operands {
+        //     evaluatedOperands.append(operand.eval(args: args))
+        // }
+
+        // return operation(evaluatedOperands)
+
+        if operands.count == 1 {
+            return operation([operands[0].eval(args: args)])
+        }
+        else {
+            return operation([operands[0].eval(args: args), operands[1].eval(args: args)])
+        }
+
     }
 
 
@@ -107,7 +120,13 @@ class SExpression {
             return operationName
         }
 
-        let stringifiedOperands = operands.map { $0.toString() }
+        // let stringifiedOperands = operands.map { $0.toString() }
+
+        var stringifiedOperands = [String]()
+        for operand in operands {
+            stringifiedOperands.append(operand.toString())
+        }
+        
         return "(\(operationName) \(stringifiedOperands.joined(separator: " ")))"
     }
 }

@@ -4,12 +4,18 @@ import Foundation
 protocol Emanon {
 
     var expressionString: String {get}
+
     func createExpression(depth: Int)
+
     func evalExpression(x: Double, y: Double) -> Double
 }
 
 
-func benchmark(emanon: Emanon) {
+func benchmark(emanon: Emanon) -> (Double, Double, Double) {
+
+    var timeCreateTotal = Double(0)
+    var timeStringTotal = Double(0)
+    var timeEvalTotal = Double(0)
 
     srand48(42)
 
@@ -18,15 +24,28 @@ func benchmark(emanon: Emanon) {
 
     for _ in 1...100 {
 
-        emanon.createExpression(depth: 5)
+        let (timeCreate, _) = Time.measureExecutionTime {
+            emanon.createExpression(depth: 5)
+        }
 
-        for x in 0 ..< sizeX {
-            for y in 0 ..< sizeY {
+         let (timeString, _) = Time.measureExecutionTime {
+            let _ = emanon.expressionString
+        }
 
-                let _ = emanon.evalExpression(x: Double(x), y: Double(y))
+        let (timeEval, _) = Time.measureExecutionTime {
+            for x in 0 ..< sizeX {
+                for y in 0 ..< sizeY {
+                    let _ = emanon.evalExpression(x: Double(x), y: Double(y))
+                }
             }
         }
+
+        timeCreateTotal += timeCreate
+        timeStringTotal += timeString
+        timeEvalTotal += timeEval
     }
+
+    return (timeCreateTotal, timeStringTotal, timeEvalTotal)
 }
 
 
@@ -35,9 +54,9 @@ func main() {
     let emanons: [Emanon] = [EmanonString(), EmanonEnum(), EmanonList(), EmanonPolymorphism()]
 
     for emanon in emanons {
-        Time.printExecutionTime("\(type(of: emanon)): ") {
-            benchmark(emanon: emanon)
-        }
+        print("\(type(of: emanon))")
+        let (timeCreateTotal, timeStringTotal, timeEvalTotal) = benchmark(emanon: emanon)
+        print("\t\(timeCreateTotal) \t\(timeStringTotal) \t\(timeEvalTotal)")
     }
 }
 

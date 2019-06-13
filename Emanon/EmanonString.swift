@@ -62,7 +62,7 @@ class EmanonString: Emanon {
 
         private static func singleExpansion(expression: String, terminal: Bool = false) -> String {
 
-            return expression.characters.reduce("") { (expr, ch) in
+            return expression.reduce("") { (expr, ch) in
 
                 if ch != "_" {
                     return expr + String(ch)

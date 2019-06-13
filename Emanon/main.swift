@@ -72,8 +72,8 @@ func generate(width: Int, height: Int) -> [[Double]] {
 
     var values = [[Double]]()
 
-    var maxValue = DBL_MIN
-    var minValue = DBL_MAX
+    var maxValue = Double.leastNormalMagnitude
+    var minValue = Double.greatestFiniteMagnitude
 
     Time.printExecutionTime("eval: ") {
 
